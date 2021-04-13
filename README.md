@@ -84,6 +84,14 @@ services:
       - LETSENCRYPT_HOST=app.example.com
 ````
 
+## Edge
+
+Run the following command to run the bleeding-edge image of envoyr/http on a Docker container:
+
+````
+docker run -p 80:80 envoyr/http:edge
+````
+
 ## License
 
 This project is licensed under the terms of the MIT License.
