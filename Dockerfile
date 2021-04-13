@@ -45,6 +45,7 @@ RUN mkdir -p /app/.composer && \
 
 # Add entrypoint
 COPY docker-entrypoint.sh /
+RUN chmod +x /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
 # set default environment variables
