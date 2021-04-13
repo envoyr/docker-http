@@ -1,13 +1,18 @@
 # Docker HTTP
 
+> 🧨 This version **2.0** branch is still in development and has breaking changes with version **1.x** !
+
 ![Docker Cloud Automated build](https://img.shields.io/docker/cloud/automated/envoyr/http)
 ![Docker Cloud Build status](https://img.shields.io/docker/cloud/build/envoyr/http)
 
 ## Documentation
 
-### Use with docker-compose
+* Default port is `80`
+* Current php version is `8.0`
 
-Spin up new server:
+## Use with docker-compose
+
+### Default
 
 ````
 version: "3"
@@ -15,10 +20,10 @@ services:
   app:
     image: envoyr/http:latest
     volumes:
-      - ./services/app/www:/home/app/www
+      - ./www:/app/www
 ````
 
-with deployer enabled:
+### Proxy
 
 ````
 version: "3"
@@ -26,13 +31,48 @@ services:
   app:
     image: envoyr/http:latest
     environment:
-      - DEPLOYER=1
-    volumes:
-      - ./services/app/deploy.php:/home/app/deploy.php
-      - ./services/app/shared:/home/app/www/shared
+      - MODE=proxy
+      - PROXY_HOST=example.com
+      - PROXY_PASS=https://example.com:80
 ````
 
-in conjunction with the docker-letsencrypt-nginx-proxy:
+### Deployer
+
+> 🧨 This feature is currently untested!
+
+````
+version: "3"
+services:
+  app:
+    image: envoyr/http:latest
+      - MODE=deployer
+    volumes:
+      - ./deploy.php:/app/deploy.php
+      - ./www/shared:/app/www/shared
+````
+
+#### Deploy after creation
+
+Deploy with zero downtime after making changes on git:
+
+````
+docker-compose exec app dep deploy
+````
+
+### Install additional packages
+
+> 🧨 This feature is currently untested!
+
+````
+services:
+  app:
+    image: envoyr/http:latest
+    environment:
+      - APT_INSTALL=php-redis
+    # ...
+````
+
+### In conjunction with the `docker-letsencrypt-nginx-proxy`:
 
 ````
 version: "3"
@@ -42,18 +82,6 @@ services:
     environment:
       - VIRTUAL_HOST=app.example.com
       - LETSENCRYPT_HOST=app.example.com
-      - DEPLOYER=1
-    volumes:
-      - ./services/app/deploy.php:/home/app/deploy.php
-      - ./services/app/shared:/home/app/www/shared
-````
-
-#### Deploy after creation
-
-Deploy with zero downtime after making changes on git:
-
-````
-docker-compose exec app dep deploy
 ````
 
 ## License
