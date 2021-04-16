@@ -64,4 +64,4 @@ COPY etc/supervisor/conf.d /etc/supervisor/conf.d
 RUN mkdir -p /var/log/supervisor
 
 # Start supervisord
-CMD ["/usr/bin/supervisord"]
+CMD ["/usr/bin/supervisord", "--loglevel", "warn"]
