@@ -1,15 +1,17 @@
 server {
     listen 80;
     
-    root /home/app/www/current/public;
-
+    root /app/www/current/public;
     index index.html index.htm index.php;
+
+    include snippets/nginx-errors.conf;
 
     location / {
         try_files $uri $uri/ /index.php?$query_string;
     }
 
     location ~ \.php$ {
+        try_files $uri =404;
         include snippets/fastcgi-php.conf;
     }
 
