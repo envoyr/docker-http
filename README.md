@@ -82,7 +82,7 @@ services:
       - LETSENCRYPT_HOST=app.example.com
 ````
 
-## Edge
+## Development build
 
 Run the following command to run the bleeding-edge image of envoyr/http on a Docker container:
 
