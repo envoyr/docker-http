@@ -15,6 +15,6 @@ header('Retry-After: 300');
         <h2>OK</h2>
     </div>
 </main>
-<footer>Powered by <a href="https://envoyr.com">envoyr/http</footer>
+<footer>Powered by <a href="https://www.cdn.gd">CDN.GD</a> - served by <?= gethostname(); ?></footer>
 </body>
 </html>

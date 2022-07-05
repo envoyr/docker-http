@@ -12,10 +12,10 @@ RUN apt-get install -y \
 # Install php components
 RUN add-apt-repository ppa:ondrej/php -y
 RUN apt-get install -y \
-    php8.0-fpm php8.0-cli php8.0-curl php8.0-mysql php8.0-mbstring php8.0-zip php8.0-xml php8.0-gd
+    php8.1-fpm php8.1-cli php8.1-curl php8.1-mysql php8.1-mbstring php8.1-zip php8.1-xml php8.1-gd
 
 # Setup php-fpm pool
-COPY etc/php/8.0/fpm/pool.d/app.conf /etc/php/8.0/fpm/pool.d/app.conf
+COPY etc/php/8.1/fpm/pool.d/app.conf /etc/php/8.1/fpm/pool.d/app.conf
 
 # Install composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -52,16 +52,13 @@ COPY docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
-# set default environment variables
-ENV MODE default
-ENV PROXY_HOST \$http_host
-
 # Set stopsignal
 STOPSIGNAL SIGKILL
 
 # Prepare folders and files
 COPY etc/supervisor/conf.d /etc/supervisor/conf.d
 RUN mkdir -p /var/log/supervisor
+COPY bin /opt/bin
 
 # Start supervisord
 CMD ["/usr/bin/supervisord", "--loglevel", "warn"]
