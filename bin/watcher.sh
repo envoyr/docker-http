@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 set -e
 
-LIST_COMMAND="ls -l /data/sites-enabled"
+LIST_COMMAND="ls -l /data/sites-enabled /data/conf.d"
 NEW_FILE_LIST=$($LIST_COMMAND)
 while true; do
   if [ "$OLD_FILE_LIST" != "$NEW_FILE_LIST" ]; then
