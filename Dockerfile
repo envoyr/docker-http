@@ -28,7 +28,6 @@ RUN chmod +x /usr/local/bin/dep
 COPY errors /usr/share/nginx/html/nginx-errors/errors
 COPY etc/nginx/nginx.conf /etc/nginx/nginx.conf
 COPY etc/nginx/snippets /etc/nginx/snippets
-COPY etc/nginx/conf.d /etc/nginx/conf.d
 
 # Redirect logs
 RUN ln -sf /dev/stdout /var/log/nginx/access.log && \
